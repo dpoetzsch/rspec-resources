@@ -22,3 +22,6 @@ Style/TrailingCommaInHashLiteral:
 
 Style/TrailingCommaInArguments:
   Enabled: false
+
+Metrics/AbcSize:
+  Max: 25

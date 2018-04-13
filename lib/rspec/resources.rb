@@ -2,6 +2,7 @@
 
 require 'active_support'
 
+require 'rspec/resources/util'
 require 'rspec/resources/dsl'
 require 'rspec/resources/version'
 
