@@ -42,6 +42,7 @@ module RSpec
             end
           end
 
+          # rubocop:disable Metrics/AbcSize
           def describe_create(&block)
             path = metadata[:base_path]
 
@@ -67,6 +68,7 @@ module RSpec
               include_if_needed(:create).restricted_examples
             end
           end
+          # rubocop:enable Metrics/AbcSize
 
           def describe_update(&block)
             path = id_path_template
