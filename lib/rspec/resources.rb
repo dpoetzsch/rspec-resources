@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
+require 'active_support'
+
+require 'rspec/resources/dsl'
 require 'rspec/resources/version'
 
-module Rspec
+module RSpec
   module Resources
-    # Your code goes here...
   end
 end

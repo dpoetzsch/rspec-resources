@@ -7,7 +7,7 @@ require 'rspec/resources/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'rspec-resources'
-  spec.version       = Rspec::Resources::VERSION
+  spec.version       = RSpec::Resources::VERSION
   spec.authors       = ['David Poetzsch-Heffter']
   spec.email         = ['davidpoetzsch@web.de']
 
@@ -23,9 +23,11 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
+  s.add_runtime_dependency 'rspec', '~> 3.0'
+  s.add_runtime_dependency 'activesupport', '>= 3.0.0'
+
   spec.add_development_dependency 'bundler', '~> 1.16'
   spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'rubocop-rspec'
 end

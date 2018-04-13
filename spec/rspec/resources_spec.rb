@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-RSpec.describe Rspec::Resources do
+RSpec.describe RSpec::Resources do
   it 'has a version number' do
-    expect(Rspec::Resources::VERSION).not_to be nil
+    expect(RSpec::Resources::VERSION).not_to be nil
   end
 
   it 'does something useful' do
