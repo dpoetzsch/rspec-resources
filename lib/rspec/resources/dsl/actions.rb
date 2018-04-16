@@ -9,15 +9,17 @@ module RSpec
         extend ActiveSupport::Concern
 
         module ClassMethods
-          def describe_index(&block)
+          def describe_index(opts = {}, &block)
             path = metadata[:base_path]
 
-            describe "GET #{path}" do
+            describe "GET #{path}", opts do
               subject { [accessible_resource] }
+
+              let(:params) { {} }
 
               before do
                 subject # force subject creation
-                get instantiate_path(path, subject.first), headers: request_headers
+                get instantiate_path(path, subject.first), params: params, headers: request_headers
               end
 
               instance_eval(&block)
@@ -27,10 +29,10 @@ module RSpec
             end
           end
 
-          def describe_show(&block)
+          def describe_show(opts = {}, &block)
             path = id_path_template
 
-            describe "GET #{path}" do
+            describe "GET #{path}", opts do
               subject { accessible_resource }
 
               before { get instantiate_path(path, subject), headers: request_headers }
@@ -43,10 +45,10 @@ module RSpec
           end
 
           # rubocop:disable Metrics/AbcSize
-          def describe_create(&block)
+          def describe_create(opts = {}, &block)
             path = metadata[:base_path]
 
-            describe "POST #{path}" do
+            describe "POST #{path}", opts do
               let(:params) { |ce| attributes_for(ce.metadata[:resource_name]) }
               let(:instantiation_resource) { accessible_resource }
 
@@ -70,10 +72,10 @@ module RSpec
           end
           # rubocop:enable Metrics/AbcSize
 
-          def describe_update(&block)
+          def describe_update(opts = {}, &block)
             path = id_path_template
 
-            describe "PATCH/PUT #{path}" do
+            describe "PATCH/PUT #{path}", opts do
               subject { accessible_resource }
 
               let(:params) { |ce| attributes_for(ce.metadata[:resource_name]) }
@@ -87,10 +89,10 @@ module RSpec
             end
           end
 
-          def describe_destroy(&block)
+          def describe_destroy(opts = {}, &block)
             path = id_path_template
 
-            describe "DELETE #{path}" do
+            describe "DELETE #{path}", opts do
               subject { accessible_resource }
 
               before { delete instantiate_path(path, subject), headers: request_headers }
