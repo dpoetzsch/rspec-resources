@@ -12,8 +12,8 @@ module RSpec
         doc
       end
 
-      def self.document_format_hash(metadata)
-        doc_format = metadata[:document_format]
+      def self.document_format_hash(metadata = nil)
+        doc_format = (metadata || RSpec.current_example.metadata)[:document_format]
 
         return DOCUMENT_FORMATS[doc_format] if doc_format.is_a?(Symbol) || doc_format.is_a?(String)
         doc_format.respond_to?(:with_indifferent_access) ? doc_format.with_indifferent_access : doc_format

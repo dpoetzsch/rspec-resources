@@ -1,12 +1,21 @@
 # frozen_string_literal: true
 
 require 'rspec/resources/dsl/matchers/json_model_matcher'
+require 'rspec/resources/dsl/matchers/error_matcher'
 
 module RSpec
   module Resources
     module DSL
       module Matchers
         extend ActiveSupport::Concern
+
+        def returns_status_code(code)
+          expect(response).to have_http_status(code)
+        end
+
+        #########################
+        ### Return Validators ###
+        #########################
 
         def returns_the_records(*records)
           try_set_description 'returns the requested records'
@@ -58,20 +67,16 @@ module RSpec
           JSON.parse(response.body)
         end
 
-        def document_format_hash
-          Util.document_format_hash RSpec.current_example.metadata
-        end
-
         def base_doc
-          Util.access_by_path(json_body, document_format_hash[:base_path])
+          Util.access_by_path(json_body, Util.document_format_hash[:base_path])
         end
 
         def attributes_doc_path
-          document_format_hash[:attributes_path]
+          Util.document_format_hash[:attributes_path]
         end
 
         def id_path
-          document_format_hash[:id_path]
+          Util.document_format_hash[:id_path]
         end
       end
     end

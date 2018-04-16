@@ -16,6 +16,10 @@ module RSpec
         id_path: 'id',
         # path to the attributes section of the resource relative to base path
         attributes_path: '',
+        # path to error objects; may either be an array or a single object
+        error_path: '',
+        # the path to the error message relative to an error object (see error_path)
+        error_detail_path: 'message',
       }.freeze,
 
       # Resource end points with simple data format wrapped in a data field
@@ -33,6 +37,10 @@ module RSpec
         id_path: 'id',
         # path to the attributes section of the resource relative to base path
         attributes_path: '',
+        # path to error objects; may either be an array or a single object
+        error_path: 'errors',
+        # the path to the error message relative to an error object (see error_path)
+        error_detail_path: 'message',
       }.freeze,
 
       # Resource end points conforming to json api specification (http://jsonapi.org/)
@@ -53,6 +61,10 @@ module RSpec
         id_path: 'id',
         # path to the attributes section of the resource relative to base path
         attributes_path: 'attributes',
+        # path to error objects; may either be an array or a single object
+        error_path: 'errors',
+        # the path to the error message relative to an error object (see error_path)
+        error_detail_path: 'detail',
       }.freeze,
     }.freeze
   end
