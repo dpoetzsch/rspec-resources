@@ -53,7 +53,7 @@ module RSpec
                 it { returns_status_code 404 }
               else
                 it 'returns no records' do
-                  expect(json_data).to be_empty
+                  expect(base_doc).to be_empty
                 end
 
                 it { returns_status_code 200 }

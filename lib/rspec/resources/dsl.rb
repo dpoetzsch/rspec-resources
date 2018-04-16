@@ -50,6 +50,7 @@ module RSpec
           base_path: base_path,
           resource_name: name.singularize,
           rspec_resources_dsl: :resource,
+          document_format: RSpec::Resources.configuration.document_format,
         }.merge(options)
 
         RSpec.describe(name.capitalize, dopts) do

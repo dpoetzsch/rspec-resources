@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'rspec/resources/dsl/matchers/json_model_matcher'
+
 module RSpec
   module Resources
     module DSL
@@ -9,11 +11,10 @@ module RSpec
         def returns_the_records(*records)
           try_set_description 'returns the requested records'
 
-          expect(json).to have_key('data')
-          expect(json_data.length).to eq(records.length)
+          expect(base_doc.length).to eq(records.length)
 
-          json_data.each_with_index do |jd, i|
-            expect(jd['attributes']).to equal_record(records[i], on: visible_attributes)
+          base_doc.each_with_index do |jd, i|
+            expect(Util.access_by_path(jd, attributes_doc_path)).to equal_record(records[i], on: visible_attributes)
           end
         end
 
@@ -22,15 +23,14 @@ module RSpec
             returns_the_records(*subject)
           else
             try_set_description 'returns the requested record'
-            expect(json).to have_key('data')
-            expect(json_data['attributes']).to equal_record(subject, on: visible_attributes)
+            expect(Util.access_by_path(base_doc, attributes_doc_path)).to equal_record(subject, on: visible_attributes)
           end
         end
 
         def creates_a_new_record
           try_set_description 'creates a new record with the given attributes'
 
-          record = accessible_resource.class.find_by_id(json_data['id'])
+          record = accessible_resource.class.find_by_id(Util.access_by_path(base_doc, id_path))
           expect(record).to be_present
           expect(record).to match_params
         end
@@ -52,6 +52,26 @@ module RSpec
         def try_set_description(desc)
           return if RSpec.current_example.metadata[:description].present?
           RSpec.current_example.metadata[:description] = desc
+        end
+
+        def json_body
+          JSON.parse(response.body)
+        end
+
+        def document_format_hash
+          Util.document_format_hash RSpec.current_example.metadata
+        end
+
+        def base_doc
+          Util.access_by_path(json_body, document_format_hash[:base_path])
+        end
+
+        def attributes_doc_path
+          document_format_hash[:attributes_path]
+        end
+
+        def id_path
+          document_format_hash[:id_path]
         end
       end
     end
