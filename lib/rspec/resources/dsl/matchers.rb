@@ -23,7 +23,7 @@ module RSpec
           expect(base_doc.length).to eq(records.length)
 
           base_doc.each_with_index do |jd, i|
-            expect(Util.access_by_path(jd, attributes_doc_path)).to equal_record(records[i], on: visible_attributes)
+            check_document jd, to_match: records[i]
           end
         end
 
@@ -32,7 +32,7 @@ module RSpec
             returns_the_records(*subject)
           else
             try_set_description 'returns the requested record'
-            expect(Util.access_by_path(base_doc, attributes_doc_path)).to equal_record(subject, on: visible_attributes)
+            check_document base_doc, to_match: subject
           end
         end
 
@@ -57,6 +57,17 @@ module RSpec
         end
 
         private
+
+        def check_document(doc, to_match: nil)
+          # check presence of attributes
+          expect(Util.access_by_path(doc, attributes_doc_path)).to equal_record(to_match, on: visible_attributes)
+
+          # check absence of attributes
+          return unless defined?(hidden_attributes)
+          hidden_attributes.each do |a|
+            expect(doc).not_to have_key(a.to_s)
+          end
+        end
 
         def try_set_description(desc)
           return if RSpec.current_example.metadata[:description].present?

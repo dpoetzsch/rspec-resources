@@ -12,6 +12,11 @@ module RSpec
             let(:visible_attributes) { params }
           end
 
+          def hidden_attributes(*params)
+            params = params.first if params.length == 1 && params.first.is_a?(Array)
+            let(:hidden_attributes) { params }
+          end
+
           def it_needs_authentication(with_headers: :auth_headers, only: %i[index show create update destroy])
             metadata[:it_needs_authentication] = {
               headers: with_headers,
