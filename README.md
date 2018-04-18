@@ -1,8 +1,21 @@
 # rspec-resources
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rspec/resources`. To experiment with that code, run `bin/console` for an interactive prompt.
+Create rspec tests for your rails resources with ease.
+This gem provides an flexible and easy to use DSL for writing common tests for rails resources.
+It integrates into rspec so you still have all the flexibility at hand for more complicated tests.
+By default, this assumes an API conforming to the [JSON API](http://jsonapi.org) standard but other formats are supported as well.
+Included features are:
 
-TODO: Delete this and the text above, and describe your gem
+* Convention of configuration: By assuming sensible defaults it is as easy as pie to create your resource tests
+* Singular and plural resources (corresponding to `resource` and `resources` in rails' routes file)
+* Support for easy testing of common header-based authentication
+* Support for testing resources that are owned by a certain user (tests that only the owner can access the records)
+* Create more complex tests with ease by building upon the provided infrastructure
+
+**NOTE**:
+While already being used in production this gem is still at an early stage.
+At the moment I'm applying the gem to existing rails apps making sure the DSL is flexible enough to apply to a large range of applications.
+I'll try to keep API changes to a minimum.
 
 ## Installation
 
