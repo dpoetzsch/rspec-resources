@@ -52,8 +52,7 @@ module RSpec
           JsonModelMatcher.new(record, hash[:on])
         end
 
-        def match_params(iparams = nil)
-          iparams ||= params
+        def match_params(iparams)
           JsonModelMatcher.new(iparams, iparams.keys)
         end
       end

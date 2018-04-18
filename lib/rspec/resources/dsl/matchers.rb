@@ -36,18 +36,18 @@ module RSpec
           end
         end
 
-        def creates_a_new_record
+        def creates_a_new_record(check: nil)
           try_set_description 'creates a new record with the given attributes'
 
           record = accessible_resource.class.find_by_id(Util.access_by_path(base_doc, id_path))
           expect(record).to be_present
-          expect(record).to match_params
+          expect(record).to match_params(check || params)
         end
 
-        def updates_the_subject
+        def updates_the_subject(check: nil)
           try_set_description 'updates the record with the given attributes'
 
-          expect(subject.reload).to match_params
+          expect(subject.reload).to match_params(check || params)
         end
 
         def destroys_the_subject
